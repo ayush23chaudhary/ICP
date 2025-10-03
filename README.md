@@ -783,7 +783,3 @@ class Solution {
 ```
 
 -----
-
-I've corrected a small logical error in the `combinations.java` recursive call (`++idx` changed to `i+1`) for the standard backtracking pattern.
-
-Let me know if you would like me to review any specific solution\!
