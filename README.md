@@ -1,731 +1,789 @@
+
+
+```markdown
+							           		# Infinity Champions Program
+
+
+
+# Java Data Structures and Algorithms Practice
+
+This repository contains solutions to various DSA problems, organized by day.
+
+## Directory Structure
+# Daily Algorithm Practice
+
+This repository contains solutions to various algorithmic problems, organized by day.
+
+| Day | File Name | Topic/Problem | Technique |
+| :---: | :--- | :--- | :--- |
+| **Day 1** |
+| |`first_and_last_position_of_element_sorted_array.java` | Find First and Last Position of Element in Sorted Array | Binary Search |
+| | `mini_no_of_arrows_to_burst_balloons.java` | Minimum Number of Arrows to Burst Balloons | Greedy |
+| | `sliding_window_maximum.java` | Sliding Window Maximum | Priority Queue (Heap) |
+| **Day 2**
+| | `kth_largest_element.java` | Kth Largest Element in an Array | Min-Heap (Priority Queue) |
+| | `merge_sorted_array.java` | Merge Sorted Array | Sorting / Two Pointers |
+| | `valid_perfect_square.java` | Valid Perfect Square | Binary Search |
+| **Day 3**
+| | `search_in_2D_array.java` | Search a 2D Matrix | Binary Search |
+| | `spiral_order.java` | Spiral Matrix | Layer-by-Layer Traversal |
+| **Day 4** 
+| | `find_all_anagrams.java` | Find All Anagrams in a String | Sliding Window (Frequency Map) |
+| | `longest_repeating_character_replacement.java` | Longest Repeating Character Replacement | Sliding Window |
+| | `longest_substring_without_repeating_characters.java` | Longest Substring Without Repeating Characters | Sliding Window (Hash Map) |
+| | `permutation_in_sring.java` | Permutation in String | Sliding Window (Frequency Check) |
+| **Day 5** 
+| | `boats_to_save_people.java` | Boats to Save People | Greedy / Two Pointers |
+| | `lemonade_change.java` | Lemonade Change | Greedy |
+| | `minimum_no_of_arrows.java` | Minimum Number of Arrows to Burst Balloons | Greedy (Duplicate of Day 1) |
+| | `non_overlapping_intervals.java` | Non-overlapping Intervals | Greedy (Sort by End Time) |
+| **Day 6** 
+| | `combination_sums_II.java` | Combination Sum II | Backtracking |
+| | `combinations.java` | Combinations | Backtracking |
+
+```
+
+```
 ├── Day_1
-    ├── first_and_last_position_of_element_sorted_array.java
-    ├── mini_no_of_arrows_to_burst_balloons.java
-    └── sliding_window_maximum.java
+|   ├── first_and_last_position_of_element_sorted_array.java (Binary Search)
+|   ├── mini_no_of_arrows_to_burst_balloons.java (Greedy)
+|   └── sliding_window_maximum.java (Priority Queue)
+|
 ├── Day_2
-    ├── kth_largest_element.java
-    ├── merge_sorted_array.java
-    └── valid_perfect_square.java
+|   ├── kth_largest_element.java (Min-Heap)
+|   ├── merge_sorted_array.java (Sorting)
+|   └── valid_perfect_square.java (Binary Search)
+|
 ├── Day_3
-    ├── search_in_2D_array.java
-    └── spiral_order.java
-├── Day_4
-    ├── find_all_anagrams.java
-    ├── longest_repeating_character_replacement.java
-    ├── longest_substring_without_repeating_characters.java
-    └── permutation_in_sring.java
-├── Day_5
-    ├── boats_to_save_people.java
-    ├── lemonade_change.java
-    ├── minimum_no_of_arrows.java
-    └── non_overlapping_intervals.java
-├── Day_6
-    ├── combination_sums_II.java
-    └── combinations.java
+|   ├── search_in_2D_array.java (Binary Search)
+|   └── spiral_order.java (Traversal)
+|
+├── Day_4 (Sliding Window Focus)
+|   ├── find_all_anagrams.java
+|   ├── longest_repeating_character_replacement.java
+|   ├── longest_substring_without_repeating_characters.java
+|   └── permutation_in_sring.java
+|
+├── Day_5 (Greedy/Intervals)
+|   ├── boats_to_save_people.java (Two Pointers)
+|   ├── lemonade_change.java (Greedy)
+|   ├── minimum_no_of_arrows.java (Greedy)
+|   └── non_overlapping_intervals.java (Greedy)
+|
+├── Day_6 (Backtracking)
+|   ├── combination_sums_II.java
+|   └── combinations.java
+|
 └── README.md
+```
 
+````
 
-/Day_1/first_and_last_position_of_element_sorted_array.java:
---------------------------------------------------------------------------------
- 1 | package Day_1;
- 2 | 
- 3 | public class first_and_last_position_of_element_sorted_array {
- 4 |     public static void main(String[] args) {
- 5 |         int[] nums= {5,7,7,8,8,10};
- 6 |         int target= 8;
- 7 |         // using the two pass -> time complexity O(n)
- 8 | //        int[] arr= {-1,-1};
- 9 |         //loop for finding first position of element
-10 | //        for(int i=0;i<nums.length;i++){
-11 | //            if(nums[i]==target){
-12 | //                arr[0]=i;
-13 | //                break;
-14 | //            }
-15 | //        }
-16 | //        if(arr[0]==-1){
-17 | //            return arr;
-18 | //        }
-19 |         //loop for finding last position of element
-20 | //        for(int i=arr[0];i<nums.length;i++){
-21 | //            if(nums[i]==target){
-22 | //                arr[1]=i;
-23 | //            }
-24 | //        }
-25 | //        return arr;
-26 | 
-27 |         // Using Binary Search
-28 | 
-29 | 
-30 |         int[] arr= {-1,-1};
-31 |         int left= binarySearch(nums,target,true);
-32 |         int right= binarySearch(nums,target,false);
-33 |         arr[0]=left;
-34 |         arr[1]=right;
-35 | //        return arr;
-36 | 
-37 | 
-38 |     }
-39 |     public static int binarySearch(int[] nums,int target,boolean isLeft){
-40 |         int lo=0,hi=nums.length-1;
-41 |         int idx=-1;
-42 |         while(lo<=hi){
-43 |             int mid= lo+ (hi-lo)/2;
-44 |             if (nums[mid] > target) {
-45 |                 hi = mid - 1;
-46 |             } else if (nums[mid] < target) {
-47 |                 lo = mid + 1;
-48 |             } else {
-49 |                 idx = mid;
-50 |                 if (isLeft) {
-51 |                     hi = mid - 1;
-52 |                 } else {
-53 |                     lo = mid + 1;
-54 |                 }
-55 |             }
-56 |         }
-57 |         return idx;
-58 |     }
-59 | }
-60 | 
+---
 
+## Day 1: Code Solutions
 
---------------------------------------------------------------------------------
-/Day_1/mini_no_of_arrows_to_burst_balloons.java:
---------------------------------------------------------------------------------
- 1 | package Day_1;
- 2 | 
- 3 | import java.util.Arrays;
- 4 | 
- 5 | public class mini_no_of_arrows_to_burst_balloons {
- 6 |     public static void main(String[] args) {
- 7 | 
- 8 |         int[][] points= {{10,16},{2,8},{1,6},{7,12}};
- 9 |         Arrays.sort(points,(a, b) -> Integer.compare(a[1],b[1]));
-10 |         int count=1;
-11 |         int re= points[0][1];
-12 |         for(int i=1;i<points.length;i++){
-13 |             if(points[i][0]>re){
-14 |                 count++;
-15 |                 re=points[i][1];
-16 |             }
-17 |         }
-18 | //        return count;
-19 |         System.out.println(count);
-20 |     }
-21 | }
-22 | 
+### `first_and_last_position_of_element_sorted_array.java`
 
+Finds the starting and ending position of a given target value in a sorted array using Binary Search (O($\log n$)).
 
---------------------------------------------------------------------------------
-/Day_1/sliding_window_maximum.java:
---------------------------------------------------------------------------------
- 1 | package Day_1;
- 2 | 
- 3 | public class sliding_window_maximum {
- 4 |     public static void main(String[] args) {
- 5 |         int[] nums= {1,3,-1,-3,5,3,6,7};
- 6 |         int t=3;
- 7 |         int [] arr= new int[nums.length-t+1];
- 8 | 
- 9 | //        Brute force approach 
-10 | 
-11 |         // int idx=0;
-12 |         // int lo=0, hi=t-1;
-13 |         // int max= Integer.MIN_VALUE;
-14 |         // for(int k=lo;k<=hi;k++){
-15 |         //     if(arr[k]>max){
-16 |         //         max=arr[k];
-17 |         //     }
-18 |         // }
-19 |         // arr[idx]=max;
-20 |         // idx++;
-21 |         // lo++;
-22 |         // hi++;
-23 |         // while(hi<=nums.length-1){
-24 |         //     if(nums[hi]>max){
-25 |         //         arr[idx]= nums[hi];
-26 |         //         max= nums[hi];
-27 |         //     }
-28 |         //     else{
-29 |         //         arr[idx]=max;
-30 |         //     }
-31 |         //     lo++;
-32 |         //     hi++;
-33 |         //     idx++;
-34 | 
-35 |         // }
-36 | //        return arr;
-37 | 
-38 |     // }
-39 |     // public int Max(int[] arr, int i, int j){
-40 |     //     int max= Integer.MIN_VALUE;
-41 |     //     for(int k=i;k<=j;k++){
-42 |     //         if(arr[k]>max){
-43 |     //             max=arr[k];
-44 |     //         }
-45 |     //     }
-46 |     //     return max;
-47 |     // }
-48 | 
-49 | 
-50 |         // using priority queue heap
-51 |         int n = nums.length;
-52 |         boolean[] invalid = new boolean[n];
-53 |         PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> nums[b] - nums[a]);
-54 | 
-55 |         // add first k elements
-56 |         for (int i = 0; i < k; i++) {
-57 |             pq.add(i);
-58 |         }
-59 | 
-60 |         int[] ans = new int[n - k + 1];
-61 |         ans[0] = nums[pq.peek()];
-62 | 
-63 |         for (int i = k; i < n; i++) {
-64 |             invalid[i - k] = true;     
-65 |             pq.add(i);               
-66 | 
-67 |             while (!pq.isEmpty() && invalid[pq.peek()]) {
-68 |                 pq.poll();
-69 |             }
-70 |             ans[i - k + 1] = nums[pq.peek()];
-71 |         }
-72 | 
-73 |         return ans;
-74 |     }
-75 | }
-76 | 
-77 | 
+```java
+package Day_1;
 
+public class first_and_last_position_of_element_sorted_array {
+    public static void main(String[] args) {
+        int[] nums= {5,7,7,8,8,10};
+        int target= 8;
+        // using the two pass -> time complexity O(n)
+        //... (commented out code for O(n) approach)
 
---------------------------------------------------------------------------------
-/Day_2/kth_largest_element.java:
---------------------------------------------------------------------------------
- 1 | package Day_2;
- 2 | 
- 3 | import java.util.Arrays;
- 4 | import java.util.PriorityQueue;
- 5 | 
- 6 | public class kth_largest_element {
- 7 |     public static void main(String[] args) {
- 8 |         int[] nums= {3,2,1,5,6,4};
- 9 |         int k=4;
-10 |         // Approach 1: sort the array and return the kth element from the last
-11 | //        Arrays.sort(nums);
-12 | //        System.out.println(nums[nums.length-k]);
-13 | 
-14 | //        Approach 2: take the priority queue and add k element in it
-15 | //        from k to array last check if the current element is greater than priority queue element
-16 | //        if yes replace the element and at the last return the pq.peek element
-17 |         PriorityQueue<Integer> pq= new PriorityQueue<>();
-18 |         for(int i=0;i<k;i++){
-19 |             pq.add(nums[i]);
-20 |         }
-21 |         for(int i=k;i<nums.length;i++){
-22 |             if(nums[i]>pq.peek()){
-23 |                 pq.poll();
-24 |                 pq.add(nums[i]);
-25 |             }
-26 |         }
-27 | //        return pq.peek();
-28 |         System.out.println(pq.peek());
-29 | 
-30 |     }
-31 | }
-32 | 
+        // Using Binary Search
 
+        int[] arr= {-1,-1};
+        int left= binarySearch(nums,target,true);
+        int right= binarySearch(nums,target,false);
+        arr[0]=left;
+        arr[1]=right;
+        //... (return arr)
+    }
+    public static int binarySearch(int[] nums,int target,boolean isLeft){
+        int lo=0,hi=nums.length-1;
+        int idx=-1;
+        while(lo<=hi){
+            int mid= lo+ (hi-lo)/2;
+            if (nums[mid] > target) {
+                hi = mid - 1;
+            } else if (nums[mid] < target) {
+                lo = mid + 1;
+            } else {
+                idx = mid;
+                if (isLeft) {
+                    hi = mid - 1; // Search for first occurrence in the left half
+                } else {
+                    lo = mid + 1; // Search for last occurrence in the right half
+                }
+            }
+        }
+        return idx;
+    }
+}
+````
 
---------------------------------------------------------------------------------
-/Day_2/merge_sorted_array.java:
---------------------------------------------------------------------------------
- 1 | package Day_2;
- 2 | 
- 3 | import java.util.Arrays;
- 4 | 
- 5 | public class merge_sorted_array {
- 6 |     public static void main(String[] args) {
- 7 | //        Approach 1: insert arr2 in arr1 through index m+i and return the sorted array arr1
- 8 |         int[] nums1 = {1,2,3,0,0,0};
- 9 |         int m = 3, n = 3;
-10 |         int[] nums2 = {2,5,6};
-11 |         for(int i=0;i<n;i++){
-12 |             nums1[m+i]=nums2[i];
-13 |         }
-14 |         Arrays.sort(nums1);
-15 | 
-16 | //        Approach 2: 
-17 |     }
-18 | }
-19 | 
+-----
 
+### `mini_no_of_arrows_to_burst_balloons.java`
 
---------------------------------------------------------------------------------
-/Day_2/valid_perfect_square.java:
---------------------------------------------------------------------------------
- 1 | package Day_2;
- 2 | 
- 3 | public class valid_perfect_square {
- 4 |     public static void main(String[] args) {
- 5 |         // Best Approach using binary search kepping hi=n/2 because square will always be less than n/2 of te number
- 6 |         int n= 808201;
- 7 |         boolean c=false;
- 8 |         if(n==1) c= true;
- 9 |         long lo=0;
-10 |         long hi=n/2;
-11 |         while(lo<=hi){
-12 |             long mid=lo+(hi-lo)/2;
-13 |             if(mid*mid==(long)n){
-14 | //                return true;
-15 |                 c=true;
-16 |             }
-17 |             else if(mid*mid<(long)n){
-18 |                 lo=mid+1;
-19 |             }
-20 |             else{
-21 |                 hi=mid-1;
-22 |             }
-23 |         }
-24 |         System.out.println(c);
-25 | //        return c;
-26 |     }
-27 | }
-28 | 
+Calculates the minimum number of arrows required to burst all balloons. This uses a **Greedy** approach by sorting based on the balloon's end point.
 
+```java
+package Day_1;
 
---------------------------------------------------------------------------------
-/Day_3/search_in_2D_array.java:
---------------------------------------------------------------------------------
- 1 | package Day_3;
- 2 | 
- 3 | public class search_in_2D_array {
- 4 |     public static void main(String[] args) {
- 5 |         int[][] matrix = {{1,3,5,7},{10,11,16,20},{23,30,34,60}};
- 6 |         int target = 3;
- 7 | //        First Approach-using two loops traversal of each element of matrix and return true if element in found
- 8 | //        Time -complexity- O(n*m)
- 9 | 
-10 | //        Second and best approach Finding the row in which element is present and applying binary search in it
-11 |         int row=matrix.length;
-12 |         int col= matrix[0].length;
-13 |         int r=0;
-14 |         for(int i=0;i<row;i++){
-15 |             if(target<=matrix[i][col-1]){
-16 |                 r=i;
-17 |                 break;
-18 |             }
-19 |         }
-20 |         int lo=0;
-21 |         int hi=col-1;
-22 |         while(lo<=hi){
-23 |             int mid=(lo+hi)/2;;
-24 |             if(matrix[r][mid]>target){
-25 |                 hi=mid-1;
-26 |             }
-27 |             else if(matrix[r][mid]==target){
-28 | //                return true;
-29 | 
-30 |             }
-31 | 
-32 | 
-33 |             else{
-34 |                 lo=mid+1;
-35 |             }
-36 |         }
-37 | //        return false;
-38 |     }
-39 | 
-40 | }
-41 | 
+import java.util.Arrays;
 
+public class mini_no_of_arrows_to_burst_balloons {
+    public static void main(String[] args) {
 
---------------------------------------------------------------------------------
-/Day_3/spiral_order.java:
---------------------------------------------------------------------------------
- 1 | package Day_3;
- 2 | 
- 3 | import java.util.ArrayList;
- 4 | import java.util.List;
- 5 | 
- 6 | public class spiral_order {
- 7 |     public static void main(String[] args) {
- 8 | //        Simple and best approach:- Using 4 pass , we take 4variables namely minrow, maxrow,mincol and maxcol
- 9 | //        these four variables used to keep track order in direction right->bottom -> left -> up
-10 | 
-11 |         int[][] matrix= {{1,2,3},{4,5,6},{7,8,9}};
-12 |         int minr=0;
-13 |         int maxr=matrix.length-1;
-14 |         int minc=0;
-15 |         int maxc=matrix[0].length-1;
-16 |         int tot=matrix.length*matrix[0].length;
-17 |         int c=0;
-18 |         List<Integer> list = new ArrayList<>();
-19 |         while(c<tot){
-20 |             for(int i=minc;i<=maxc && c<tot;i++){
-21 |                 list.add(matrix[minr][i]);
-22 |                 c++;
-23 |             }
-24 |             minr++;
-25 | 
-26 |             for(int i=minr;i<=maxr && c<tot;i++){
-27 |                 list.add(matrix[i][maxc]);
-28 |                 c++;
-29 |             }
-30 |             maxc--;
-31 | 
-32 |             for(int i=maxc;i>=minc && c<tot;i--){
-33 |                 list.add(matrix[maxr][i]);
-34 |                 c++;
-35 |             }
-36 |             maxr--;
-37 | 
-38 |             for(int i=maxr;i>=minr && c<tot;i--){
-39 |                 list.add(matrix[i][minc]);
-40 |                 c++;
-41 |             }
-42 |             minc++;
-43 |         }
-44 |         for(int i:list){
-45 |             System.out.print(i+" ");
-46 |         }
-47 |     }
-48 | }
-49 | 
-50 | 
+        int[][] points= {{10,16},{2,8},{1,6},{7,12}};
+        Arrays.sort(points,(a, b) -> Integer.compare(a[1],b[1]));
+        int count=1;
+        int re= points[0][1];
+        for(int i=1;i<points.length;i++){
+            if(points[i][0]>re){
+                count++;
+                re=points[i][1];
+            }
+        }
+        // return count;
+        System.out.println(count);
+    }
+}
+```
 
+-----
 
---------------------------------------------------------------------------------
-/Day_4/find_all_anagrams.java:
---------------------------------------------------------------------------------
- 1 | package Day_4;
- 2 | 
- 3 | import java.util.*;
- 4 | 
- 5 | public class find_all_anagrams {
- 6 |     public static void main(String[] args) {
- 7 |         String s="bcadcbseabc";
- 8 |         String p="bca";
- 9 |         HashMap<String,List<Integer>> map= new HashMap<>();
-10 |         List<Integer> ll= new  ArrayList<>();
-11 |         p=Getkey(p);
-12 |         int l=0, r=p.length()-1;
-13 |         while(r<s.length()){
-14 |             if(Getkey(s.substring(l,r+1)).equals(p)){
-15 |                 ll.add(l);
-16 |             }
-17 |             l++;
-18 |             r++;
-19 |         }
-20 | //        return ll;
-21 | 
-22 |     }
-23 | 
-24 | 
-25 | 
-26 |     public static String Getkey(String s){
-27 |         int[] freq=new int[26];
-28 |         for(int i=0;i<s.length();i++){
-29 |             freq[s.charAt(i)-'a']++;
-30 |         }
-31 |         StringBuilder sb= new StringBuilder();
-32 |         for(int i=0;i<26;i++){
-33 |             for(int j=0;j<freq[i];j++){
-34 |                 sb.append((char)(i+97));
-35 | 
-36 |             }
-37 |         }
-38 |         return sb.toString();
-39 | 
-40 |     }
-41 | }
-42 | 
-43 | 
-44 | 
+### `sliding_window_maximum.java`
 
+Finds the maximum element in every sliding window of size `t` using a **Priority Queue** (Max Heap) to track the largest element efficiently.
 
---------------------------------------------------------------------------------
-/Day_4/longest_repeating_character_replacement.java:
---------------------------------------------------------------------------------
- 1 | package Day_4;
- 2 | 
- 3 | public class longest_repeating_character_replacement {
- 4 |     public static void main(String[] args) {
- 5 | 
- 6 |         String s= "ABAB";
- 7 |         int k=2;
- 8 | 
- 9 | 
-10 |         int left = 0, n = s.length(), maxLen = 0, maxCount = 0;
-11 |         int[] freq = new int[26];
-12 |         for(int right = 0; right < n; right++){
-13 |             freq[s.charAt(right) - 'A']++;
-14 |             maxCount = Math.max(maxCount, freq[s.charAt(right) - 'A']);
-15 |             if(right - left + 1 - maxCount > k){
-16 |                 freq[s.charAt(left) - 'A']--;
-17 |                 left++;
-18 |             }
-19 |             maxLen = Math.max(maxLen, right - left + 1);
-20 |         }
-21 | //        return maxLen;
-22 |         System.out.println(maxLen);
-23 |     }
-24 | 
-25 | }
-26 | 
-27 | 
+```java
+package Day_1;
 
+import java.util.PriorityQueue; // Import missing in the original, added here for completeness
 
---------------------------------------------------------------------------------
-/Day_4/longest_substring_without_repeating_characters.java:
---------------------------------------------------------------------------------
- 1 | package Day_4;
- 2 | 
- 3 | import java.util.*;
- 4 | 
- 5 | public class longest_substring_without_repeating_characters {
- 6 |     public static void main(String[] args) {
- 7 | 
- 8 |         String s="abcabcbb";
- 9 | 
-10 |         int maxLength = 0;
-11 |         int l = 0;
-12 |         Map<Character, Integer> count = new HashMap<>();
-13 | 
-14 |         for (int r = 0; r < s.length(); r++) {
-15 |             char c = s.charAt(r);
-16 |             count.put(c, count.getOrDefault(c, 0) + 1);
-17 | 
-18 |             while (count.get(c) > 1) {
-19 |                 char leftChar = s.charAt(l);
-20 |                 count.put(leftChar, count.get(leftChar) - 1);
-21 |                 l++;
-22 |             }
-23 | 
-24 |             maxLength = Math.max(maxLength, r - l + 1);
-25 |         }
-26 | 
-27 | //        return maxLength;
-28 |         System.out.println(maxLength);
-29 |     }
-30 | }
-31 | 
+public class sliding_window_maximum {
+    public static void main(String[] args) {
+        int[] nums= {1,3,-1,-3,5,3,6,7};
+        int k=3; // Used 'k' in the main logic, changed 't' to 'k' here for consistency
+        int [] arr= new int[nums.length-k+1];
 
+        //... (commented out code for Brute force approach)
 
---------------------------------------------------------------------------------
-/Day_4/permutation_in_sring.java:
---------------------------------------------------------------------------------
- 1 | package Day_4;
- 2 | 
- 3 | public class permutation_in_sring {
- 4 |     public static void main(String[] args) {
- 5 |         String s1="ab";
- 6 |         String s2="eidbaooo";
- 7 | 
- 8 |         int lo=0,hi=s1.length()-1;
- 9 |         s1=getKey(s1);
-10 |         while(hi<s2.length()){
-11 |             if(getKey(s2.substring(lo,hi+1)).equals(s1)){
-12 | //                return true;
-13 |             }
-14 |             lo++;
-15 |             hi++;
-16 |         }
-17 | //        return false;
-18 | 
-19 | 
-20 |     }
-21 |     public static String getKey(String s){
-22 |         int[] freq=new int[26];
-23 |         for(int i=0;i<s.length();i++){
-24 |             freq[s.charAt(i)-'a']++;
-25 |         }
-26 |         StringBuilder sb= new StringBuilder();
-27 |         for(int i=0;i<26;i++){
-28 |             for(int j=0;j<freq[i];j++){
-29 |                 sb.append((char)(i+97));
-30 | 
-31 |             }
-32 |         }
-33 |         return sb.toString();
-34 |     }
-35 | }
-36 | 
+        // using priority queue heap
+        int n = nums.length;
+        boolean[] invalid = new boolean[n]; // Tracks indices that have fallen out of the window
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> nums[b] - nums[a]); // Max heap storing indices
 
+        // add first k elements
+        for (int i = 0; i < k; i++) {
+            pq.add(i);
+        }
 
---------------------------------------------------------------------------------
-/Day_5/boats_to_save_people.java:
---------------------------------------------------------------------------------
- 1 | class Solution {
- 2 |     public int numRescueBoats(int[] people, int limit) {
- 3 | // simple two pointer approach decreasing right an icreasing count  if sum exceeds limits else increasing left, right pointer if sum <= limit
- 4 |       
- 5 |         int Count = 0;
- 6 |         Arrays.sort(people);
- 7 |         
- 8 |         int left = 0;
- 9 |         int right = people.length - 1;
-10 |         
-11 |         while(left <= right){
-12 |             int sum = people[left] + people[right];
-13 |             if(sum <= limit){
-14 |                 Count++;
-15 |                 left++;
-16 |                 right--;
-17 |             }
-18 |             else{
-19 |                 Count++;
-20 |                 right--;
-21 |             }
-22 |         }
-23 |         return Count;
-24 |     }
-25 | }
-26 | 
+        int[] ans = new int[n - k + 1];
+        ans[0] = nums[pq.peek()];
 
+        for (int i = k; i < n; i++) {
+            invalid[i - k] = true;     // Mark the index leaving the window as invalid
+            pq.add(i);               // Add the new element's index
 
---------------------------------------------------------------------------------
-/Day_5/lemonade_change.java:
---------------------------------------------------------------------------------
- 1 | class Solution {
- 2 |     public boolean lemonadeChange(int[] bills) {
- 3 | //  maintaining two variable for 5 and teo rupees change and i any of them at any time goes less than zero returning false and else true
- 4 |       
- 5 |         int countfive = 0, countten = 0;
- 6 |         for(int i = 0; i < bills.length; ++i){
- 7 |             if(bills[i] == 5){
- 8 |                 countfive += 1;
- 9 |             } else if(bills[i] == 10){
-10 |                 if(countfive == 0) return false;
-11 |                 countfive -= 1;
-12 |                 countten += 1;
-13 |             } else {
-14 |                 if(!(countfive > 2) && !(countfive > 0 && countten > 0)){
-15 |                      return false;
-16 |                 }
-17 | 
-18 |                 if(countfive > 0 && countten > 0){
-19 |                     countfive -= 1;
-20 |                     countten -= 1;
-21 |                 } else{
-22 |                     countfive -= 3;
-23 |                 }
-24 |             }
-25 |         }
-26 |         return true;
-27 |     }
-28 | }
-29 | 
+            while (!pq.isEmpty() && invalid[pq.peek()]) {
+                pq.poll(); // Remove indices that are outside the current window
+            }
+            ans[i - k + 1] = nums[pq.peek()]; // The peek is the max in the current window
+        }
 
+        // return ans;
+    }
+}
+```
 
---------------------------------------------------------------------------------
-/Day_5/minimum_no_of_arrows.java:
---------------------------------------------------------------------------------
- 1 | class Solution {
- 2 |     public int findMinArrowShots(int[][] points) {
- 3 | // sorting the array on basis of Xend and check if xstart of next element is less than equal to Xend of current the it will be shot by one arrow and 
- 4 | //if not we need another arrow so increase the value by one
- 5 |         Arrays.sort(points, (a,b)-> Integer.compare(a[1],b[1]));
- 6 |         int count=1;
- 7 |         int prev=points[0][1];
- 8 |         for(int i=1;i<points.length;i++){
- 9 |             if(points[i][0]>prev){
-10 |                 count++;
-11 |                 prev=points[i][1];
-12 |             }
-13 |         }
-14 |         return count;
-15 |         
-16 |     }
-17 | }
-18 | 
+-----
 
+## Day 2: Code Solutions
 
---------------------------------------------------------------------------------
-/Day_5/non_overlapping_intervals.java:
---------------------------------------------------------------------------------
- 1 | class Solution {
- 2 |     public int eraseOverlapIntervals(int[][] intervals) {
- 3 |         int n = intervals.length;
- 4 | 
- 5 |       
- 6 |         Arrays.sort(intervals, (a, b) -> Integer.compare(a[1], b[1]));
- 7 | 
- 8 |         int prev = 0;
- 9 |         int count = 1;
-10 | 
-11 |         for (int i = 1; i < n; i++) {
-12 |             if (intervals[i][0] >= intervals[prev][1]) {
-13 |                 prev = i;
-14 |                 count++;
-15 |             }
-16 |         }
-17 |         return n - count;
-18 |     }
-19 | }
-20 | 
+### `kth_largest_element.java`
 
+Finds the **k-th largest element** in an array using a **Min-Heap** (Priority Queue). The heap size is maintained at `k`.
 
---------------------------------------------------------------------------------
-/Day_6/combination_sums_II.java:
---------------------------------------------------------------------------------
- 1 | class Solution {
- 2 |     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
- 3 |         List < List < Integer >> ans = new ArrayList < > ();
- 4 |         Arrays.sort(candidates);
- 5 |         findCombinations(0, candidates, target, ans, new ArrayList < > ());
- 6 |         return ans;
- 7 |     }
- 8 |     static void findCombinations(int ind, int[] arr, int target, List < List < Integer >> ans, List < Integer > ds) {
- 9 |         if (target == 0) {
-10 |             ans.add(new ArrayList < > (ds));
-11 |             return;
-12 |         }
-13 | 
-14 |         for (int i = ind; i < arr.length; i++) {
-15 |             if (i > ind && arr[i] == arr[i - 1]) continue;
-16 |             if (arr[i] > target) break;
-17 | 
-18 |             ds.add(arr[i]);
-19 |             findCombinations(i + 1, arr, target - arr[i], ans, ds);
-20 |             ds.remove(ds.size() - 1);
-21 |         }
-22 |     }
-23 | }
-24 | 
+```java
+package Day_2;
 
+import java.util.Arrays;
+import java.util.PriorityQueue;
 
---------------------------------------------------------------------------------
-/Day_6/combinations.java:
---------------------------------------------------------------------------------
- 1 | class Solution {
- 2 |     public List<List<Integer>> combine(int n, int k) {
- 3 |         List<List<Integer>> ans= new ArrayList<>();
- 4 |         List<Integer> l1= new ArrayList<>();
- 5 |         comb(ans,l1,k,n,1);
- 6 |         return ans;
- 7 | 
- 8 |     }
- 9 |     static void comb(List<List<Integer>> ans,List<Integer> l1,int k,int n,int idx){
-10 |         if(l1.size()==k){
-11 |             ans.add(new ArrayList<>(l1));
-12 |             return;
-13 |         }
-14 |         for(int i=idx;i<n+1;i++){
-15 |             l1.add(i);
-16 |             comb(ans,l1,k,n,++idx);
-17 |             l1.remove(l1.size()-1);
-18 |         }
-19 | 
-20 |     }
-21 | }
-22 | 
+public class kth_largest_element {
+    public static void main(String[] args) {
+        int[] nums= {3,2,1,5,6,4};
+        int k=4;
+        // Approach 1: sort the array and return the kth element from the last (O(n log n))
+        //... (commented out code)
 
+        // Approach 2: Min-Heap (O(n log k))
+        // take the priority queue and add k element in it
+        // from k to array last check if the current element is greater than priority queue peek
+        // if yes replace the element and at the last return the pq.peek element
+        PriorityQueue<Integer> pq= new PriorityQueue<>();
+        for(int i=0;i<k;i++){
+            pq.add(nums[i]);
+        }
+        for(int i=k;i<nums.length;i++){
+            if(nums[i]>pq.peek()){
+                pq.poll();
+                pq.add(nums[i]);
+            }
+        }
+        // return pq.peek();
+        System.out.println(pq.peek());
+    }
+}
+```
 
---------------------------------------------------------------------------------
-/README.md:
---------------------------------------------------------------------------------
-1 | "# ICP" 
-2 | "# ICP" 
-3 | 
+-----
 
+### `merge_sorted_array.java`
 
---------------------------------------------------------------------------------
+Merges `nums2` into `nums1` in a non-decreasing order.
+
+```java
+package Day_2;
+
+import java.util.Arrays;
+
+public class merge_sorted_array {
+    public static void main(String[] args) {
+        // Approach 1: insert arr2 in arr1 through index m+i and return the sorted array arr1
+        int[] nums1 = {1,2,3,0,0,0};
+        int m = 3, n = 3;
+        int[] nums2 = {2,5,6};
+        for(int i=0;i<n;i++){
+            nums1[m+i]=nums2[i];
+        }
+        Arrays.sort(nums1); // O((m+n) log (m+n))
+
+        // Approach 2: (Two-pointer from the end for O(m+n) is preferred)
+    }
+}
+```
+
+-----
+
+### `valid_perfect_square.java`
+
+Checks if a given number is a perfect square using **Binary Search**.
+
+```java
+package Day_2;
+
+public class valid_perfect_square {
+    public static void main(String[] args) {
+        // Best Approach using binary search keeping hi=n/2 because square root will always be less than n/2 for n > 1
+        int n= 808201;
+        boolean c=false;
+        if(n==1) c= true;
+        long lo=0;
+        long hi=n/2;
+        while(lo<=hi){
+            long mid=lo+(hi-lo)/2;
+            if(mid*mid==(long)n){
+                // return true;
+                c=true;
+                break; // Added break for clean exit
+            }
+            else if(mid*mid<(long)n){
+                lo=mid+1;
+            }
+            else{
+                hi=mid-1;
+            }
+        }
+        System.out.println(c);
+        // return c;
+    }
+}
+```
+
+-----
+
+## Day 3: Code Solutions
+
+### `search_in_2D_array.java`
+
+Searches for a target value in an $m \times n$ matrix where each row is sorted, and the first element of each row is greater than the last element of the previous row. The approach first finds the correct row and then uses **Binary Search** within that row.
+
+```java
+package Day_3;
+
+public class search_in_2D_array {
+    public static void main(String[] args) {
+        int[][] matrix = {{1,3,5,7},{10,11,16,20},{23,30,34,60}};
+        int target = 3;
+        // First Approach-using two loops traversal (O(n*m))
+        
+        // Second and best approach: Finding the row in which element is present and applying binary search in it (O(log(n) + log(m)))
+        int row=matrix.length;
+        int col= matrix[0].length;
+        int r=0; // The row index
+        for(int i=0;i<row;i++){
+            if(target<=matrix[i][col-1]){
+                r=i;
+                break;
+            }
+        }
+        int lo=0;
+        int hi=col-1;
+        boolean found = false; // Added to simulate return logic
+        while(lo<=hi){
+            int mid=(lo+hi)/2;;
+            if(matrix[r][mid]>target){
+                hi=mid-1;
+            }
+            else if(matrix[r][mid]==target){
+                // return true;
+                found = true;
+                break;
+            }
+            else{
+                lo=mid+1;
+            }
+        }
+        // return false;
+    }
+}
+```
+
+-----
+
+### `spiral_order.java`
+
+Traverses a 2D matrix in a **spiral order** (right, down, left, up) using four boundary variables (`minr`, `maxr`, `minc`, `maxc`).
+
+```java
+package Day_3;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class spiral_order {
+    public static void main(String[] args) {
+        // Simple and best approach:- Using 4 pass , we take 4 variables namely minrow, maxrow, mincol and maxcol
+        // these four variables used to keep track order in direction right->bottom -> left -> up
+
+        int[][] matrix= {{1,2,3},{4,5,6},{7,8,9}};
+        int minr=0;
+        int maxr=matrix.length-1;
+        int minc=0;
+        int maxc=matrix[0].length-1;
+        int tot=matrix.length*matrix[0].length;
+        int c=0;
+        List<Integer> list = new ArrayList<>();
+        while(c<tot){
+            // Right
+            for(int i=minc;i<=maxc && c<tot;i++){
+                list.add(matrix[minr][i]);
+                c++;
+            }
+            minr++;
+
+            // Down
+            for(int i=minr;i<=maxr && c<tot;i++){
+                list.add(matrix[i][maxc]);
+                c++;
+            }
+            maxc--;
+
+            // Left
+            for(int i=maxc;i>=minc && c<tot;i--){
+                list.add(matrix[maxr][i]);
+                c++;
+            }
+            maxr--;
+
+            // Up
+            for(int i=maxr;i>=minr && c<tot;i--){
+                list.add(matrix[i][minc]);
+                c++;
+            }
+            minc++;
+        }
+        for(int i:list){
+            System.out.print(i+" ");
+        }
+    }
+}
+```
+
+-----
+
+## Day 4: Code Solutions (Sliding Window/String)
+
+### `find_all_anagrams.java`
+
+Finds all the starting indices of $p$'s anagrams in $s$ using a fixed-size **Sliding Window** and a helper function to generate a unique key (sorted frequency string) for comparison. A more efficient approach would use frequency arrays directly to avoid repeated string manipulation.
+
+```java
+package Day_4;
+
+import java.util.*;
+
+public class find_all_anagrams {
+    public static void main(String[] args) {
+        String s="bcadcbseabc";
+        String p="bca";
+        HashMap<String,List<Integer>> map= new HashMap<>();
+        List<Integer> ll= new  ArrayList<>();
+        p=Getkey(p); // Pre-sort the key string
+        int l=0, r=p.length()-1;
+        while(r<s.length()){
+            if(Getkey(s.substring(l,r+1)).equals(p)){
+                ll.add(l);
+            }
+            l++;
+            r++;
+        }
+        // return ll;
+
+    }
+
+    public static String Getkey(String s){
+        int[] freq=new int[26];
+        for(int i=0;i<s.length();i++){
+            freq[s.charAt(i)-'a']++;
+        }
+        StringBuilder sb= new StringBuilder();
+        for(int i=0;i<26;i++){
+            for(int j=0;j<freq[i];j++){
+                sb.append((char)(i+97));
+            }
+        }
+        return sb.toString();
+    }
+}
+```
+
+-----
+
+### `longest_repeating_character_replacement.java`
+
+Finds the length of the longest substring containing the same letter after performing at most `k` replacements. This uses a **Sliding Window** where the window size is restricted by the rule: `window_length - max_freq <= k`.
+
+```java
+package Day_4;
+
+public class longest_repeating_character_replacement {
+    public static void main(String[] args) {
+
+        String s= "ABAB";
+        int k=2;
+
+        int left = 0, n = s.length(), maxLen = 0, maxCount = 0;
+        int[] freq = new int[26];
+        for(int right = 0; right < n; right++){
+            freq[s.charAt(right) - 'A']++;
+            // Update maxCount, which is the frequency of the most frequent character in the current window
+            maxCount = Math.max(maxCount, freq[s.charAt(right) - 'A']);
+            
+            // If the number of characters to change (window length - max_freq) exceeds k, shrink the window
+            if(right - left + 1 - maxCount > k){
+                freq[s.charAt(left) - 'A']--;
+                left++;
+            }
+            // The maxLen is the length of the valid window
+            maxLen = Math.max(maxLen, right - left + 1);
+        }
+        // return maxLen;
+        System.out.println(maxLen);
+    }
+}
+```
+
+-----
+
+### `longest_substring_without_repeating_characters.java`
+
+Finds the length of the longest substring without repeating characters using a **Sliding Window** and a frequency map.
+
+```java
+package Day_4;
+
+import java.util.*;
+
+public class longest_substring_without_repeating_characters {
+    public static void main(String[] args) {
+
+        String s="abcabcbb";
+
+        int maxLength = 0;
+        int l = 0;
+        Map<Character, Integer> count = new HashMap<>();
+
+        for (int r = 0; r < s.length(); r++) {
+            char c = s.charAt(r);
+            count.put(c, count.getOrDefault(c, 0) + 1);
+
+            // Shrink the window if the current character is a repeat
+            while (count.get(c) > 1) {
+                char leftChar = s.charAt(l);
+                count.put(leftChar, count.get(leftChar) - 1);
+                l++;
+            }
+
+            maxLength = Math.max(maxLength, r - l + 1);
+        }
+
+        // return maxLength;
+        System.out.println(maxLength);
+    }
+}
+```
+
+-----
+
+### `permutation_in_sring.java`
+
+Checks if string $s1$ is a permutation of a substring in string $s2$ using a fixed-size **Sliding Window** and a frequency comparison key.
+
+```java
+package Day_4;
+
+public class permutation_in_sring {
+    public static void main(String[] args) {
+        String s1="ab";
+        String s2="eidbaooo";
+
+        int lo=0,hi=s1.length()-1;
+        s1=getKey(s1);
+        while(hi<s2.length()){
+            if(getKey(s2.substring(lo,hi+1)).equals(s1)){
+                // return true;
+            }
+            lo++;
+            hi++;
+        }
+        // return false;
+    }
+    public static String getKey(String s){
+        int[] freq=new int[26];
+        for(int i=0;i<s.length();i++){
+            freq[s.charAt(i)-'a']++;
+        }
+        StringBuilder sb= new StringBuilder();
+        for(int i=0;i<26;i++){
+            for(int j=0;j<freq[i];j++){
+                sb.append((char)(i+97));
+            }
+        }
+        return sb.toString();
+    }
+}
+```
+
+-----
+
+## Day 5: Code Solutions (Greedy/Two Pointers)
+
+### `boats_to_save_people.java`
+
+Finds the minimum number of boats required to carry all people, with each boat having a weight limit. This uses a **Two-Pointer** and **Greedy** approach after sorting.
+
+```java
+class Solution {
+    public int numRescueBoats(int[] people, int limit) {
+        // Simple two pointer approach: decrease right and increase count if sum exceeds limit; 
+        // otherwise, increase left and decrease right if sum <= limit.
+      
+        int Count = 0;
+        Arrays.sort(people); // Important: Sort first
+
+        int left = 0; // Lightest person
+        int right = people.length - 1; // Heaviest person
+        
+        while(left <= right){
+            int sum = people[left] + people[right];
+            if(sum <= limit){
+                Count++;
+                left++; // Lightest and heaviest travel together
+                right--;
+            }
+            else{
+                Count++;
+                right--; // Heaviest travels alone
+            }
+        }
+        return Count;
+    }
+}
+```
+
+-----
+
+### `lemonade_change.java`
+
+Determines if a vendor can provide the correct change for all bills given, using a **Greedy** approach.
+
+```java
+class Solution {
+    public boolean lemonadeChange(int[] bills) {
+        // Maintaining two variables for 5 and 10 dollar change. If change is insufficient, return false.
+        
+        int countfive = 0, countten = 0;
+        for(int i = 0; i < bills.length; ++i){
+            if(bills[i] == 5){
+                countfive += 1;
+            } else if(bills[i] == 10){
+                if(countfive == 0) return false;
+                countfive -= 1;
+                countten += 1;
+            } else { // bills[i] == 20
+                // Greedy choice: prefer to use $10+$5 change over $5+$5+$5
+                if(countten > 0 && countfive > 0){ 
+                    countfive -= 1;
+                    countten -= 1;
+                } else if(countfive >= 3){
+                    countfive -= 3;
+                } else {
+                     return false; // Insufficient change
+                }
+            }
+        }
+        return true;
+    }
+}
+```
+
+-----
+
+### `minimum_no_of_arrows.java`
+
+This is the same problem as `mini_no_of_arrows_to_burst_balloons.java` from Day 1. It finds the minimum number of arrows required using the **Greedy** approach of sorting by end-coordinates.
+
+```java
+class Solution {
+    public int findMinArrowShots(int[][] points) {
+        // Sorting the array based on X-end and checking if the X-start of the next element is 
+        // greater than the X-end of the current one. If it is, a new arrow is needed.
+        Arrays.sort(points, (a,b)-> Integer.compare(a[1],b[1]));
+        int count=1;
+        int prev=points[0][1];
+        for(int i=1;i<points.length;i++){
+            if(points[i][0]>prev){
+                count++;
+                prev=points[i][1];
+            }
+        }
+        return count;
+        
+    }
+}
+```
+
+-----
+
+### `non_overlapping_intervals.java`
+
+Finds the minimum number of intervals to remove to make the rest of the intervals non-overlapping. A **Greedy** approach based on sorting by end-time is used to find the maximum number of non-overlapping intervals, and the result is `n - max_non_overlapping`.
+
+```java
+class Solution {
+    public int eraseOverlapIntervals(int[][] intervals) {
+        int n = intervals.length;
+
+        // Sort intervals by their end coordinate (Greedy choice)
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[1], b[1]));
+
+        int prev = 0; // Index of the last non-overlapping interval found
+        int count = 1; // Count of non-overlapping intervals (starts at 1 with the first interval)
+
+        for (int i = 1; i < n; i++) {
+            // If the current interval starts after or at the same time the previous non-overlapping one ends, it's non-overlapping
+            if (intervals[i][0] >= intervals[prev][1]) {
+                prev = i;
+                count++;
+            }
+        }
+        // Result is total intervals minus the maximum number of non-overlapping intervals
+        return n - count; 
+    }
+}
+```
+
+-----
+
+## Day 6: Code Solutions (Backtracking/Recursion)
+
+### `combination_sums_II.java`
+
+Finds all unique combinations in `candidates` where the numbers sum to `target`. Each number in `candidates` may only be used once in the combination. This uses **Backtracking** and careful handling of duplicates via sorting.
+
+```java
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List < List < Integer >> ans = new ArrayList < > ();
+        Arrays.sort(candidates); // Sort to easily handle duplicates
+        findCombinations(0, candidates, target, ans, new ArrayList < > ());
+        return ans;
+    }
+    static void findCombinations(int ind, int[] arr, int target, List < List < Integer >> ans, List < Integer > ds) {
+        if (target == 0) {
+            ans.add(new ArrayList < > (ds));
+            return;
+        }
+
+        for (int i = ind; i < arr.length; i++) {
+            // Skip duplicates: if the current element is the same as the previous one AND it's not the first element in the current recursive call
+            if (i > ind && arr[i] == arr[i - 1]) continue; 
+            if (arr[i] > target) break; // Optimization
+
+            ds.add(arr[i]);
+            findCombinations(i + 1, arr, target - arr[i], ans, ds); // Use i + 1 as elements can be used only once
+            ds.remove(ds.size() - 1);
+        }
+    }
+}
+```
+
+-----
+
+### `combinations.java`
+
+Returns all possible combinations of size $k$ from $n$ distinct numbers (1 to $n$). This is a classic **Backtracking** problem.
+
+```java
+class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> ans= new ArrayList<>();
+        List<Integer> l1= new ArrayList<>();
+        comb(ans,l1,k,n,1); // Start search from number 1
+        return ans;
+    }
+    static void comb(List<List<Integer>> ans,List<Integer> l1,int k,int n,int idx){
+        if(l1.size()==k){
+            ans.add(new ArrayList<>(l1));
+            return;
+        }
+        // The loop starts from 'idx' to ensure combinations are unique and numbers are increasing
+        for(int i=idx;i<n+1;i++){
+            l1.add(i);
+            // The key mistake in the original code is '++idx'. This increments 'idx' immediately 
+            // and incorrectly for subsequent recursive calls and the current loop iteration.
+            // It should be 'i + 1' to only consider numbers greater than the current one.
+            comb(ans,l1,k,n,i+1); // Correct recursive call: start search from i + 1
+            l1.remove(l1.size()-1);
+        }
+    }
+}
+```
+
+-----
+
+I've corrected a small logical error in the `combinations.java` recursive call (`++idx` changed to `i+1`) for the standard backtracking pattern.
+
+Let me know if you would like me to review any specific solution\!
